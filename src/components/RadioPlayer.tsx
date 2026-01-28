@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Radio, Clock, Music, Wifi, FileText, BarChart3, Calendar } from "lucide-react";
+import RankingMonitor from "./RankingMonitor";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Radio, Clock, Music, Wifi, FileText, BarChart3, Calendar, TrendingUp } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AudioVisualizer from "./AudioVisualizer";
@@ -54,13 +55,20 @@ const RadioPlayer = () => {
     <div className="w-full max-w-6xl mx-auto space-y-6">
       {/* Navigation Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full grid grid-cols-4 bg-muted/30 border border-muted/50 p-1">
+        <TabsList className="w-full grid grid-cols-5 bg-muted/30 border border-muted/50 p-1">
           <TabsTrigger 
             value="monitor" 
             className="font-mono text-xs data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
           >
             <Radio className="w-4 h-4 mr-2" />
             Monitor
+          </TabsTrigger>
+          <TabsTrigger 
+            value="ranking" 
+            className="font-mono text-xs data-[state=active]:bg-yellow-400/20 data-[state=active]:text-yellow-400"
+          >
+            <TrendingUp className="w-4 h-4 mr-2" />
+            Ranking
           </TabsTrigger>
           <TabsTrigger 
             value="relatorio" 
@@ -277,6 +285,11 @@ const RadioPlayer = () => {
               )}
             </div>
           </div>
+        </TabsContent>
+
+        {/* Ranking Tab */}
+        <TabsContent value="ranking" className="mt-6">
+          <RankingMonitor stations={stations} />
         </TabsContent>
 
         {/* Relatório Tab */}
