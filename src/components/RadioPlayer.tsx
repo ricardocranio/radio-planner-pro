@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import RankingMonitor from "./RankingMonitor";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Radio, Clock, Music, Wifi, FileText, BarChart3, Calendar, TrendingUp, Search } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Radio, Clock, Music, Wifi, FileText, BarChart3, Calendar, TrendingUp, Search, Dna, Activity } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AudioVisualizer from "./AudioVisualizer";
@@ -9,6 +9,9 @@ import GradeView from "./GradeView";
 import RadioReport from "./RadioReport";
 import ArlConfig from "./ArlConfig";
 import DeezerSearch from "./DeezerSearch";
+import ProgrammingGrid from "./ProgrammingGrid";
+import SystemDashboard from "./SystemDashboard";
+import DNAViewer from "./DNAViewer";
 import rawRadioData from "@/data/radioData.json";
 import { parseRadioData } from "@/utils/parseRadioData";
 import type { RawRadioData, Station } from "@/types/radio";
@@ -26,7 +29,7 @@ const RadioPlayer = () => {
   const [currentStationIndex, setCurrentStationIndex] = useState(0);
   const [volume, setVolume] = useState([75]);
   const [isMuted, setIsMuted] = useState(false);
-  const [activeTab, setActiveTab] = useState("monitor");
+  const [activeTab, setActiveTab] = useState("dashboard");
 
   const station: Station | undefined = stations[currentStationIndex];
 
@@ -55,52 +58,70 @@ const RadioPlayer = () => {
 
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
-      {/* Navigation Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full grid grid-cols-6 bg-muted/30 border border-muted/50 p-1">
+        <TabsList className="w-full grid grid-cols-4 md:grid-cols-8 bg-muted/30 border border-muted/50 p-1 h-auto">
+          <TabsTrigger 
+            value="dashboard" 
+            className="font-mono text-[10px] md:text-xs data-[state=active]:bg-primary/20 data-[state=active]:text-primary py-2"
+          >
+            <Activity className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
+            <span className="hidden md:inline">Dashboard</span>
+          </TabsTrigger>
           <TabsTrigger 
             value="monitor" 
-            className="font-mono text-xs data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
+            className="font-mono text-[10px] md:text-xs data-[state=active]:bg-cyan-400/20 data-[state=active]:text-cyan-400 py-2"
           >
-            <Radio className="w-4 h-4 mr-2" />
-            Monitor
+            <Radio className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
+            <span className="hidden md:inline">Monitor</span>
           </TabsTrigger>
           <TabsTrigger 
             value="ranking" 
-            className="font-mono text-xs data-[state=active]:bg-yellow-400/20 data-[state=active]:text-yellow-400"
+            className="font-mono text-[10px] md:text-xs data-[state=active]:bg-yellow-400/20 data-[state=active]:text-yellow-400 py-2"
           >
-            <TrendingUp className="w-4 h-4 mr-2" />
-            Ranking
-          </TabsTrigger>
-          <TabsTrigger 
-            value="deezer" 
-            className="font-mono text-xs data-[state=active]:bg-pink-400/20 data-[state=active]:text-pink-400"
-          >
-            <Search className="w-4 h-4 mr-2" />
-            Deezer
-          </TabsTrigger>
-          <TabsTrigger 
-            value="relatorio" 
-            className="font-mono text-xs data-[state=active]:bg-secondary/20 data-[state=active]:text-secondary"
-          >
-            <FileText className="w-4 h-4 mr-2" />
-            Relatório
-          </TabsTrigger>
-          <TabsTrigger 
-            value="estatisticas" 
-            className="font-mono text-xs data-[state=active]:bg-accent/20 data-[state=active]:text-accent"
-          >
-            <BarChart3 className="w-4 h-4 mr-2" />
-            Estatísticas
+            <TrendingUp className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
+            <span className="hidden md:inline">Ranking</span>
           </TabsTrigger>
           <TabsTrigger 
             value="grade" 
-            className="font-mono text-xs data-[state=active]:bg-green-400/20 data-[state=active]:text-green-400"
+            className="font-mono text-[10px] md:text-xs data-[state=active]:bg-green-400/20 data-[state=active]:text-green-400 py-2"
           >
-            <Calendar className="w-4 h-4 mr-2" />
-            Grade
+            <Calendar className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
+            <span className="hidden md:inline">Grade</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="dna" 
+            className="font-mono text-[10px] md:text-xs data-[state=active]:bg-secondary/20 data-[state=active]:text-secondary py-2"
+          >
+            <Dna className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
+            <span className="hidden md:inline">DNA</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="deezer" 
+            className="font-mono text-[10px] md:text-xs data-[state=active]:bg-pink-400/20 data-[state=active]:text-pink-400 py-2"
+          >
+            <Search className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
+            <span className="hidden md:inline">Deezer</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="relatorio" 
+            className="font-mono text-[10px] md:text-xs data-[state=active]:bg-orange-400/20 data-[state=active]:text-orange-400 py-2"
+          >
+            <FileText className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
+            <span className="hidden md:inline">Relatório</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="estatisticas" 
+            className="font-mono text-[10px] md:text-xs data-[state=active]:bg-accent/20 data-[state=active]:text-accent py-2"
+          >
+            <BarChart3 className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
+            <span className="hidden md:inline">Stats</span>
           </TabsTrigger>
         </TabsList>
+
+        {/* Dashboard Tab */}
+        <TabsContent value="dashboard" className="mt-6">
+          <SystemDashboard stations={stations} lastUpdate={lastUpdate} />
+        </TabsContent>
 
         {/* Monitor Tab */}
         <TabsContent value="monitor" className="mt-6">
@@ -301,6 +322,16 @@ const RadioPlayer = () => {
           <RankingMonitor stations={stations} />
         </TabsContent>
 
+        {/* Grade Tab */}
+        <TabsContent value="grade" className="mt-6">
+          <ProgrammingGrid stations={stations} />
+        </TabsContent>
+
+        {/* DNA Tab */}
+        <TabsContent value="dna" className="mt-6">
+          <DNAViewer stations={stations} />
+        </TabsContent>
+
         {/* Deezer Tab */}
         <TabsContent value="deezer" className="mt-6">
           <div className="grid gap-6 lg:grid-cols-3">
@@ -321,11 +352,6 @@ const RadioPlayer = () => {
         {/* Estatísticas Tab */}
         <TabsContent value="estatisticas" className="mt-6">
           <StatsCard stations={stations} lastUpdate={lastUpdate} />
-        </TabsContent>
-
-        {/* Grade Tab */}
-        <TabsContent value="grade" className="mt-6">
-          <GradeView stations={stations} />
         </TabsContent>
       </Tabs>
     </div>
