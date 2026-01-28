@@ -4,7 +4,7 @@ import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AudioVisualizer from "./AudioVisualizer";
 import StatsCard from "./StatsCard";
-import GradeGenerator from "./GradeGenerator";
+import GradeView from "./GradeView";
 import RadioReport from "./RadioReport";
 import rawRadioData from "@/data/radioData.json";
 import { parseRadioData } from "@/utils/parseRadioData";
@@ -291,7 +291,7 @@ const RadioPlayer = () => {
 
         {/* Grade Tab */}
         <TabsContent value="grade" className="mt-6">
-          <GradeGenerator stations={stations} />
+          <GradeView stations={stations} />
         </TabsContent>
       </Tabs>
     </div>
