@@ -3,6 +3,7 @@ import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Radio, Clock, Mus
 import { Slider } from "@/components/ui/slider";
 import AudioVisualizer from "./AudioVisualizer";
 import StatsCard from "./StatsCard";
+import GradeGenerator from "./GradeGenerator";
 import rawRadioData from "@/data/radioData.json";
 import { parseRadioData } from "@/utils/parseRadioData";
 import type { RawRadioData, Station } from "@/types/radio";
@@ -21,6 +22,7 @@ const RadioPlayer = () => {
   const [volume, setVolume] = useState([75]);
   const [isMuted, setIsMuted] = useState(false);
   const [showStats, setShowStats] = useState(false);
+  const [showGrade, setShowGrade] = useState(false);
 
   const station: Station | undefined = stations[currentStationIndex];
 
@@ -138,13 +140,33 @@ const RadioPlayer = () => {
           </span>
         </div>
 
-        {/* Toggle Stats Button */}
-        <div className="text-center mt-6">
+        {/* Toggle Buttons */}
+        <div className="flex items-center justify-center gap-4 mt-6">
           <button
-            onClick={() => setShowStats(!showStats)}
-            className="px-4 py-2 rounded-lg bg-muted/30 hover:bg-muted/50 border border-muted/50 text-sm font-mono text-muted-foreground hover:text-foreground transition-all"
+            onClick={() => {
+              setShowStats(!showStats);
+              if (!showStats) setShowGrade(false);
+            }}
+            className={`px-4 py-2 rounded-lg border text-sm font-mono transition-all ${
+              showStats
+                ? "bg-primary/20 border-primary/50 text-primary"
+                : "bg-muted/30 hover:bg-muted/50 border-muted/50 text-muted-foreground hover:text-foreground"
+            }`}
           >
             {showStats ? "< ocultar_estatisticas" : "> ver_estatisticas"}
+          </button>
+          <button
+            onClick={() => {
+              setShowGrade(!showGrade);
+              if (!showGrade) setShowStats(false);
+            }}
+            className={`px-4 py-2 rounded-lg border text-sm font-mono transition-all ${
+              showGrade
+                ? "bg-accent/20 border-accent/50 text-accent"
+                : "bg-muted/30 hover:bg-muted/50 border-muted/50 text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            {showGrade ? "< ocultar_grade" : "> gerar_grade"}
           </button>
         </div>
       </div>
@@ -153,6 +175,13 @@ const RadioPlayer = () => {
       {showStats && (
         <div className="mt-8">
           <StatsCard stations={stations} lastUpdate={lastUpdate} />
+        </div>
+      )}
+
+      {/* Grade Generator Section */}
+      {showGrade && (
+        <div className="mt-8">
+          <GradeGenerator stations={stations} />
         </div>
       )}
 
