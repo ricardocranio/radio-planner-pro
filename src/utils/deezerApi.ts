@@ -1,6 +1,6 @@
 /**
- * Deezer API - Busca de músicas faltantes
- * API pública do Deezer para completar músicas não encontradas no monitoramento
+ * Deezer API com suporte a ARL (Deemix)
+ * API do Deezer para busca e download de músicas
  */
 
 export interface DeezerTrack {
@@ -17,7 +17,7 @@ export interface DeezerTrack {
     cover_medium: string;
   };
   duration: number;
-  preview: string; // URL do preview de 30s
+  preview: string;
   link: string;
 }
 
@@ -28,6 +28,17 @@ export interface DeezerSearchResult {
 }
 
 const DEEZER_API_BASE = "https://api.deezer.com";
+
+// Obtém o ARL salvo no localStorage
+export function getStoredArl(): string | null {
+  return localStorage.getItem("deemix_arl");
+}
+
+// Verifica se o ARL está configurado
+export function isArlConfigured(): boolean {
+  const arl = getStoredArl();
+  return !!arl && arl.length > 0;
+}
 
 /**
  * Busca músicas no Deezer por query
@@ -57,19 +68,17 @@ export async function searchDeezer(
 
 /**
  * Busca músicas por gênero/chart no Deezer
- * Útil para preencher coringas com músicas populares
  */
 export async function getDeezerChart(
   genre: "pop" | "sertanejo" | "pagode" | "mpb" = "pop",
   limit: number = 25
 ): Promise<DeezerTrack[]> {
   try {
-    // IDs de gênero do Deezer (aproximados)
     const genreIds: Record<string, number> = {
       pop: 132,
-      sertanejo: 466, // Brazilian regional
-      pagode: 98, // Samba/Pagode
-      mpb: 463, // Brazilian popular music
+      sertanejo: 466,
+      pagode: 98,
+      mpb: 463,
     };
 
     const genreId = genreIds[genre] || 132;
@@ -78,7 +87,6 @@ export async function getDeezerChart(
     );
 
     if (!response.ok) {
-      // Fallback para chart global
       const fallbackResponse = await fetch(
         `${DEEZER_API_BASE}/chart/0/tracks?limit=${limit}`
       );
@@ -127,6 +135,33 @@ export function formatDeezerTrack(track: DeezerTrack): {
 }
 
 /**
+ * Gera URL de download via Deemix (requer backend com ARL)
+ * Nota: O download real requer um servidor Deemix configurado
+ */
+export function getDeemixDownloadInfo(track: DeezerTrack, arl: string | null): {
+  canDownload: boolean;
+  trackId: number;
+  trackUrl: string;
+  message: string;
+} {
+  if (!arl) {
+    return {
+      canDownload: false,
+      trackId: track.id,
+      trackUrl: track.link,
+      message: "ARL não configurado. Configure o ARL para habilitar downloads.",
+    };
+  }
+
+  return {
+    canDownload: true,
+    trackId: track.id,
+    trackUrl: `https://www.deezer.com/track/${track.id}`,
+    message: "Pronto para download via Deemix",
+  };
+}
+
+/**
  * Busca músicas para preencher coringas baseado no gênero da rádio
  */
 export async function getCoringaFromDeezer(
@@ -134,7 +169,6 @@ export async function getCoringaFromDeezer(
   usedDNAs: Set<string>,
   getDNA: (s: string) => string
 ): Promise<DeezerTrack | null> {
-  // Mapeia rádio para gênero
   const radioGenres: Record<string, "pop" | "sertanejo" | "pagode" | "mpb"> = {
     bh: "pop",
     band: "sertanejo",
@@ -145,7 +179,6 @@ export async function getCoringaFromDeezer(
   const genre = radioGenres[radioKey] || "pop";
   const tracks = await getDeezerChart(genre, 50);
 
-  // Encontra primeira música não usada
   for (const track of tracks) {
     const trackDNA = getDNA(`${track.artist.name} - ${track.title}`);
     if (!usedDNAs.has(trackDNA)) {
