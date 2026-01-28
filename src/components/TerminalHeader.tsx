@@ -13,7 +13,7 @@ const TerminalHeader = () => {
             <div>
               <h1 className="font-bold text-xl">
                 <span className="text-primary">{"<"}</span>
-                <span className="text-foreground">Radio</span>
+                <span className="text-foreground">Rádio</span>
                 <span className="text-secondary">Coder</span>
                 <span className="text-primary">{"/>"}</span>
               </h1>
