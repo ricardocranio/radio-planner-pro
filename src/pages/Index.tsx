@@ -16,7 +16,7 @@ const Index = () => {
             <div className="text-center mb-12">
               <p className="font-mono text-muted-foreground">
                 <span className="text-primary">{"// "}</span>
-                Música para mantener el flow mientras codeas
+                Monitore suas rádios favoritas em tempo real
                 <span className="animate-pulse">_</span>
               </p>
             </div>

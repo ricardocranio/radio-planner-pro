@@ -1,0 +1,393 @@
+{
+  "radios": {
+    "bh_fm_102.1": {
+      "nome": "BH FM 102.1",
+      "url": "https://mytuner-radio.com/pt/radio/radio-bh-fm-402270",
+      "historico_completo": [
+        {
+          "musica": "Ar Condicionado no 15 (Ao Vivo)\n\nWesley Safadão\n1 min ago",
+          "timestamp": "2026-01-19T14:10:01.192237"
+        }
+      ],
+      "ultimo_dado": {
+        "url": "https://mytuner-radio.com/pt/radio/radio-bh-fm-402270",
+        "nome": "BH FM 102.1",
+        "tocando_agora": "Ar Condicionado no 15 (Ao Vivo)\n\nWesley Safadão\n1 min ago",
+        "ultimas_tocadas": [
+          "Banquinho (Ao Vivo)\n\nFelipe e Rodrigo\n3 min ago",
+          "Pra Não Pensar em Você\n\nBonde do Forró\n9 min ago",
+          "Não Sei Te Desprezar\n\nDavi Quaresma\n11 min ago",
+          "Solteiro Forçado (Boiadeira Internacional)\n\nAna Castela\n16 min ago",
+          "Mais do Mesmo (Ao Vivo)\n\nGrupo Menos É Mais\n19 min ago"
+        ],
+        "timestamp": "2026-01-19T14:10:01.192237",
+        "erro": null
+      }
+    },
+    "clube_fm_brasília_105.5": {
+      "nome": "Clube FM Brasília 105.5",
+      "url": "https://mytuner-radio.com/pt/radio/radio-clube-fm-brasilia-1055-406812/",
+      "historico_completo": [
+        {
+          "musica": "Barulho Do Foguete (Ao Vivo)\n\nZé Neto & Cristiano\nLIVE",
+          "timestamp": "2026-01-19T14:10:15.222189"
+        }
+      ],
+      "ultimo_dado": {
+        "url": "https://mytuner-radio.com/pt/radio/radio-clube-fm-brasilia-1055-406812/",
+        "nome": "Clube FM Brasília 105.5",
+        "tocando_agora": "Barulho Do Foguete (Ao Vivo)\n\nZé Neto & Cristiano\nLIVE",
+        "ultimas_tocadas": [
+          "Opa Cadê Eu (Ao Vivo)\n\nClayton & Romário\n4 min ago",
+          "Linger\n\nThe Cranberries\n8 min ago",
+          "Quatro Fases (Ao Vivo em Uberlândia / 2018)\n\nBruno & Marrone\n9 min ago",
+          "Mais do Mesmo (Ao Vivo)\n\nGrupo Menos É Mais\n10 min ago",
+          "Memórias\n\nMalta & Traia Véia\n18 min ago"
+        ],
+        "timestamp": "2026-01-19T14:10:15.222189",
+        "erro": null
+      }
+    },
+    "band_fm_96.1": {
+      "nome": "Band FM 96.1",
+      "url": "https://mytuner-radio.com/pt/radio/band-fm-413397/",
+      "historico_completo": [
+        {
+          "musica": "Frente Fria (Ao Vivo)\n\nZezé Di Camargo\n10 min ago",
+          "timestamp": "2026-01-19T14:10:23.701955"
+        }
+      ],
+      "ultimo_dado": {
+        "url": "https://mytuner-radio.com/pt/radio/band-fm-413397/",
+        "nome": "Band FM 96.1",
+        "tocando_agora": "Frente Fria (Ao Vivo)\n\nZezé Di Camargo\n10 min ago",
+        "ultimas_tocadas": [
+          "Tubarões (Ao Vivo)\n\nDiego & Victor Hugo\n16 min ago",
+          "Vício (Ao vivo)\n\nBelo\n17 min ago",
+          "Nada vai tirar você de mim\n\nSNZ\n20 min ago",
+          "Facas (Ao Vivo)\n\nDiego & Victor Hugo & Bruno & Marrone\n23 min ago",
+          "Vai Aprender Amar\n\nMurilo Huff\n26 min ago"
+        ],
+        "timestamp": "2026-01-19T14:10:23.701955",
+        "erro": null
+      }
+    },
+    "rádio_globo_rj_98.1": {
+      "nome": "Rádio Globo RJ 98.1",
+      "url": "https://mytuner-radio.com/pt/radio/radio-globo-rj-402262/",
+      "historico_completo": [
+        {
+          "musica": "Vagabundo de Sorte (Ao Vivo)\n\nGabrielzinho\nLIVE",
+          "timestamp": "2026-01-19T14:10:32.146295"
+        }
+      ],
+      "ultimo_dado": {
+        "url": "https://mytuner-radio.com/pt/radio/radio-globo-rj-402262/",
+        "nome": "Rádio Globo RJ 98.1",
+        "tocando_agora": "Vagabundo de Sorte (Ao Vivo)\n\nGabrielzinho\nLIVE",
+        "ultimas_tocadas": [
+          "Acertou Em Cheio (Ao Vivo)\n\nGrupo Menos É Mais\n9 min ago",
+          "Por Enquanto / Citação: Meu Bem Querer (Ao Vivo)\n\nMumuzinho\n12 min ago",
+          "Tubarões (Ao Vivo)\n\nDiego & Victor Hugo\n18 min ago",
+          "Tão Feliz (Ao Vivo)\n\nThiaguinho\n22 min ago",
+          "O Que Eu Faço Agora\n\nYgor & Kelven\n25 min ago"
+        ],
+        "timestamp": "2026-01-19T14:10:32.146295",
+        "erro": null
+      }
+    },
+    "bf04bf00-7f84-42b6-be90-447db71075a5": {
+      "nome": "BH FM",
+      "url": "https://mytuner-radio.com/pt/radio/radio-bh-fm-ao-vivo-402270/",
+      "historico_completo": [
+        {
+          "musica": "O Que Eu Faço Agora\n\nYgor & Kelven\nLIVE",
+          "timestamp": "2026-01-19T14:27:22.745272"
+        },
+        {
+          "musica": "Página de Amigos / Inevitável / Flor (Ao Vivo)\n\nGrupo Menos É Mais\n1 min ago",
+          "timestamp": "2026-01-19T14:35:43.081567"
+        },
+        {
+          "musica": "A Noite (La Notte) [Ao Vivo]\n\nGusttavo Lima\n3 min ago",
+          "timestamp": "2026-01-19T14:41:28.366017"
+        },
+        {
+          "musica": "SEQUÊNCIA REVOLUCIONÁRIA\n\nPEDRO SAMPAIO & Mc Gw\n5 min ago",
+          "timestamp": "2026-01-19T14:47:14.310667"
+        },
+        {
+          "musica": "Ioiô (feat. Ivete Sangalo) [Ao Vivo]\n\nDilsinho\nLIVE",
+          "timestamp": "2026-01-19T14:53:01.408698"
+        },
+        {
+          "musica": "Cerveja, Sal e Limão (Ao Vivo)\n\nMatheus & Kauan\n2 min ago",
+          "timestamp": "2026-01-19T14:58:49.232473"
+        },
+        {
+          "musica": "Leva Eu / Arerê (Ao Vivo em Belo Horizonte / 2019)\n\nBanda Eva\n4 min ago",
+          "timestamp": "2026-01-19T15:04:34.975548"
+        },
+        {
+          "musica": "Água na Peneira (Ao Vivo)\n\nZé Neto & Cristiano\n2 min ago",
+          "timestamp": "2026-01-19T15:10:18.252494"
+        },
+        {
+          "musica": "For Us\n\nPici\nLIVE",
+          "timestamp": "2026-01-19T15:16:05.825585"
+        },
+        {
+          "musica": "Caixa Postal (Ao Vivo)\n\nÀTTØØXXÁ\nLIVE",
+          "timestamp": "2026-01-19T15:21:57.624864"
+        },
+        {
+          "musica": "Inclusive Eu (Ao Vivo)\n\nMurilo Huff\n1 min ago",
+          "timestamp": "2026-01-19T15:27:46.667848"
+        },
+        {
+          "musica": "Esqueci Você (Ao Vivo)\n\nHenrique & Diego\n2 min ago",
+          "timestamp": "2026-01-19T15:33:36.267279"
+        },
+        {
+          "musica": "Boca Ocupada\n\nCleber & Cauan & Matheus & Kauan\nLIVE",
+          "timestamp": "2026-01-19T15:39:25.586917"
+        },
+        {
+          "musica": "Vida (Ao Vivo)\n\nZé Neto & Cristiano\n3 min ago",
+          "timestamp": "2026-01-19T15:45:15.974735"
+        }
+      ],
+      "ultimo_dado": {
+        "url": "https://mytuner-radio.com/pt/radio/radio-bh-fm-ao-vivo-402270/",
+        "nome": "BH FM",
+        "tocando_agora": "Vida (Ao Vivo)\n\nZé Neto & Cristiano\n3 min ago",
+        "ultimas_tocadas": [
+          "Boca Ocupada\n\nCleber & Cauan & Matheus & Kauan\n5 min ago",
+          "Alô Ex (Ao Vivo)\n\nTurma do Pagode\n8 min ago",
+          "Última Saudade (Ao Vivo)\n\nHenrique & Juliano\n10 min ago",
+          "Esqueci Você (Ao Vivo)\n\nHenrique & Diego\n13 min ago",
+          "Balanço da Rede\n\nMatheus Fernandes & Xand Avião\n17 min ago"
+        ],
+        "timestamp": "2026-01-19T15:45:15.974735",
+        "erro": null
+      }
+    },
+    "1665679b-3313-4ed1-a36f-cd3e8a248ba0": {
+      "nome": "Band FM",
+      "url": "https://mytuner-radio.com/pt/radio/band-fm-sao-paulo-485671/",
+      "historico_completo": [
+        {
+          "musica": "Mais do Mesmo (Ao Vivo)\n\nGrupo Menos É Mais\n10 min ago",
+          "timestamp": "2026-01-19T14:35:51.662537"
+        },
+        {
+          "musica": "Love Is a Four Letter Word\n\nPop Divas\n12 min ago",
+          "timestamp": "2026-01-19T14:41:39.856251"
+        },
+        {
+          "musica": "Expectativa x Realidade\n\nMatheus & Kauan\n12 min ago",
+          "timestamp": "2026-01-19T14:47:26.009956"
+        },
+        {
+          "musica": "Louca de Saudade (Ao Vivo)\n\nJorge & Mateus\n13 min ago",
+          "timestamp": "2026-01-19T14:53:13.521970"
+        },
+        {
+          "musica": "Louca de Saudade (Ao Vivo)\n\nJorge & Mateus\n19 min ago",
+          "timestamp": "2026-01-19T14:59:00.736236"
+        },
+        {
+          "musica": "Ilusão De Ótica (Ao Vivo)\n\nMatheus & Kauan & Ana Castela\n15 min ago",
+          "timestamp": "2026-01-19T15:04:43.537051"
+        },
+        {
+          "musica": "Dois Tristes (Ao Vivo)\n\nSimone Mendes\n14 min ago",
+          "timestamp": "2026-01-19T15:10:29.618759"
+        },
+        {
+          "musica": "Briga Feia (Ao Vivo)\n\nHenrique & Juliano\n14 min ago",
+          "timestamp": "2026-01-19T15:16:17.356066"
+        },
+        {
+          "musica": "Olha onde eu tô\n\nKaize\n17 min ago",
+          "timestamp": "2026-01-19T15:22:09.809644"
+        },
+        {
+          "musica": "Fica Combinado Assim (Ao Vivo)\n\nSorriso Maroto\n15 min ago",
+          "timestamp": "2026-01-19T15:27:58.517756"
+        },
+        {
+          "musica": "Seu Polícia (Ao Vivo)\n\nZé Neto & Cristiano\n16 min ago",
+          "timestamp": "2026-01-19T15:33:48.409637"
+        },
+        {
+          "musica": "Impressionando Os Anjos (Ao Vivo)\n\nGustavo Mioto\n16 min ago",
+          "timestamp": "2026-01-19T15:39:38.084424"
+        },
+        {
+          "musica": "Fica Combinado Assim (Ao Vivo)\n\nSorriso Maroto\n19 min ago",
+          "timestamp": "2026-01-19T15:45:27.116841"
+        }
+      ],
+      "ultimo_dado": {
+        "url": "https://mytuner-radio.com/pt/radio/band-fm-413397/",
+        "nome": "Band FM",
+        "tocando_agora": "Fica Combinado Assim (Ao Vivo)\n\nSorriso Maroto\n19 min ago",
+        "ultimas_tocadas": [
+          "Impressionando Os Anjos (Ao Vivo)\n\nGustavo Mioto\n22 min ago",
+          "A Fila Anda\n\nLéo Magalhães\n25 min ago",
+          "Seu Polícia (Ao Vivo)\n\nZé Neto & Cristiano\n27 min ago",
+          "Nada (Lisboa) [Ao Vivo]\n\nOlho Seco\n29 min ago",
+          "Fica Combinado Assim (Ao Vivo)\n\nSorriso Maroto\n32 min ago"
+        ],
+        "timestamp": "2026-01-19T15:45:27.116841",
+        "erro": null
+      }
+    },
+    "7c5cd7b1-1fad-434f-85ad-0a939ca8b30a": {
+      "nome": "Clube FM",
+      "url": "https://mytuner-radio.com/pt/radio/clube-fm-brasilia-469802/",
+      "historico_completo": [
+        {
+          "musica": "Balançou Balançou (Ao Vivo)\n\nThiago Jose\n3 min ago",
+          "timestamp": "2026-01-19T14:36:02.038832"
+        },
+        {
+          "musica": "Quatro Fases (Ao Vivo em Uberlândia / 2018)\n\nBruno & Marrone\nLIVE",
+          "timestamp": "2026-01-19T14:41:49.740491"
+        },
+        {
+          "musica": "Mais do Mesmo (Ao Vivo)\n\nGrupo Menos É Mais\nLIVE",
+          "timestamp": "2026-01-19T14:47:36.622887"
+        },
+        {
+          "musica": "Vai Lá (Ao Vivo em Goiânia)\n\nMaiara & Maraisa\nLIVE",
+          "timestamp": "2026-01-19T14:53:24.089437"
+        },
+        {
+          "musica": "Concerning Hobbits\n\nHoward Shore\n53 sec ago",
+          "timestamp": "2026-01-19T14:59:10.416197"
+        },
+        {
+          "musica": "Confia (Ao Vivo)\n\nGrupo Menos É Mais\nLIVE",
+          "timestamp": "2026-01-19T15:04:53.559499"
+        },
+        {
+          "musica": "Elevador (Ao Vivo)\n\nHugo & Guilherme\nLIVE",
+          "timestamp": "2026-01-19T15:10:40.280248"
+        },
+        {
+          "musica": "feelslikeimfallinginlove\n\nColdplay\nLIVE",
+          "timestamp": "2026-01-19T15:16:27.195181"
+        },
+        {
+          "musica": "Halo\n\nCimorelli\nLIVE",
+          "timestamp": "2026-01-19T15:22:21.707441"
+        },
+        {
+          "musica": "Nada (Lisboa) [Ao Vivo]\n\nOlho Seco\nLIVE",
+          "timestamp": "2026-01-19T15:28:09.041157"
+        },
+        {
+          "musica": "Broken Wings (Remastered)\n\nMr. Mister\n4 min ago",
+          "timestamp": "2026-01-19T15:33:58.987868"
+        },
+        {
+          "musica": "Me Ama Ou Me Larga (Ao Vivo)\n\nSimone Mendes\n2 min ago",
+          "timestamp": "2026-01-19T15:39:48.536371"
+        },
+        {
+          "musica": "Right Here Waiting\n\nRichard Marx\nLIVE",
+          "timestamp": "2026-01-19T15:45:36.673621"
+        }
+      ],
+      "ultimo_dado": {
+        "url": "https://mytuner-radio.com/pt/radio/radio-clube-fm-brasilia-1055-406812/",
+        "nome": "Clube FM",
+        "tocando_agora": "Right Here Waiting\n\nRichard Marx\nLIVE",
+        "ultimas_tocadas": [
+          "Me Ama Ou Me Larga (Ao Vivo)\n\nSimone Mendes\n8 min ago",
+          "Pedido de Socorro (Ao Vivo)\n\nPromessa D\n11 min ago",
+          "Broken Wings (Remastered)\n\nMr. Mister\n15 min ago",
+          "Nada (Lisboa) [Ao Vivo]\n\nOlho Seco\n18 min ago",
+          "Olha onde eu tô\n\nKaize\n21 min ago"
+        ],
+        "timestamp": "2026-01-19T15:45:36.673621",
+        "erro": null
+      }
+    },
+    "79d1ef19-fd04-48d8-8b08-985a507adebb": {
+      "nome": "Globo Fm",
+      "url": "https://mytuner-radio.com/pt/radio/radio-globo-rj-402262/",
+      "historico_completo": [
+        {
+          "musica": "Em Busca Da Minha Sorte (Ao Vivo)\n\nThiaguinho & Billy Sp\nLIVE",
+          "timestamp": "2026-01-19T14:36:12.703660"
+        },
+        {
+          "musica": "Ensaboado (Ao Vivo)\n\nFerrugem\nLIVE",
+          "timestamp": "2026-01-19T14:41:59.513944"
+        },
+        {
+          "musica": "Desliga E Vem / Eu Tenho Muito Mais (feat. Dilsinho) [Ao Vivo]\n\nTiee\n3 min ago",
+          "timestamp": "2026-01-19T14:47:46.237439"
+        },
+        {
+          "musica": "Desliga E Vem / Eu Tenho Muito Mais (feat. Dilsinho) [Ao Vivo]\n\nTiee\n9 min ago",
+          "timestamp": "2026-01-19T14:53:34.315090"
+        },
+        {
+          "musica": "Peguei Um Ita No Norte (Edited)\n\nQuinho\n3 min ago",
+          "timestamp": "2026-01-19T14:59:19.943646"
+        },
+        {
+          "musica": "Sinto Sua Falta / Namoro Escondido / 12 Horas (Ao Vivo)\n\nDi Propósito, Yan & Vitor Limma\nLIVE",
+          "timestamp": "2026-01-19T15:05:03.400137"
+        },
+        {
+          "musica": "Sinto Sua Falta / Namoro Escondido / 12 Horas (Ao Vivo)\n\nDi Propósito, Yan & Vitor Limma\n9 min ago",
+          "timestamp": "2026-01-19T15:10:50.858422"
+        },
+        {
+          "musica": "Lose Control\n\nTeddy Swims\nLIVE",
+          "timestamp": "2026-01-19T15:16:37.293517"
+        },
+        {
+          "musica": "Lose Control\n\nTeddy Swims\n8 min ago",
+          "timestamp": "2026-01-19T15:22:31.577972"
+        },
+        {
+          "musica": "Triplex (Ao Vivo)\n\nMatheus Fernandes & Matheus & Kauan\nLIVE",
+          "timestamp": "2026-01-19T15:28:20.083118"
+        },
+        {
+          "musica": "Triplex (Ao Vivo)\n\nMatheus Fernandes & Matheus & Kauan\n7 min ago",
+          "timestamp": "2026-01-19T15:34:09.707277"
+        },
+        {
+          "musica": "Caixa Postal (Ao Vivo)\n\nÀTTØØXXÁ\n5 min ago",
+          "timestamp": "2026-01-19T15:39:58.391377"
+        },
+        {
+          "musica": "Pede Que Eu Dou / Amantes (Ao Vivo)\n\nThiago Soares\n4 min ago",
+          "timestamp": "2026-01-19T15:45:47.145425"
+        }
+      ],
+      "ultimo_dado": {
+        "url": "https://mytuner-radio.com/pt/radio/radio-globo-rj-402262/",
+        "nome": "Globo Fm",
+        "tocando_agora": "Pede Que Eu Dou / Amantes (Ao Vivo)\n\nThiago Soares\n4 min ago",
+        "ultimas_tocadas": [
+          "Caixa Postal (Ao Vivo)\n\nÀTTØØXXÁ\n11 min ago",
+          "Triplex (Ao Vivo)\n\nMatheus Fernandes & Matheus & Kauan\n19 min ago",
+          "Lose Control\n\nTeddy Swims\n31 min ago",
+          "Desapaixonar (Ao Vivo)\n\nMarvvila\n34 min ago",
+          "Sinto Sua Falta / Namoro Escondido / 12 Horas (Ao Vivo)\n\nDi Propósito, Yan & Vitor Limma\n44 min ago"
+        ],
+        "timestamp": "2026-01-19T15:45:47.145425",
+        "erro": null
+      }
+    }
+  },
+  "ultima_atualizacao": "19/01/2026 15:45:57"
+}
