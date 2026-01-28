@@ -43,6 +43,8 @@ export interface Station {
   genre: string;
   frequency: string;
   url: string;
+  city?: string; // Cidade de transmissão
+  state?: string; // Estado (UF)
   nowPlaying: Track;
   recentTracks: Track[];
   historico: Track[]; // Histórico completo
