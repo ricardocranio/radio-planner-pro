@@ -1,7 +1,8 @@
 import { useState, useMemo } from "react";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Radio, Clock, Music } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Radio, Clock, Music, Wifi } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import AudioVisualizer from "./AudioVisualizer";
+import StatsCard from "./StatsCard";
 import rawRadioData from "@/data/radioData.json";
 import { parseRadioData } from "@/utils/parseRadioData";
 import type { RawRadioData, Station } from "@/types/radio";
@@ -11,10 +12,15 @@ const RadioPlayer = () => {
     return parseRadioData(rawRadioData as RawRadioData);
   }, []);
 
+  const lastUpdate = useMemo(() => {
+    return (rawRadioData as RawRadioData).ultima_atualizacao || "";
+  }, []);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentStationIndex, setCurrentStationIndex] = useState(0);
   const [volume, setVolume] = useState([75]);
   const [isMuted, setIsMuted] = useState(false);
+  const [showStats, setShowStats] = useState(false);
 
   const station: Station | undefined = stations[currentStationIndex];
 
@@ -35,18 +41,25 @@ const RadioPlayer = () => {
   }
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-6xl mx-auto">
       {/* Main Player Card */}
       <div className="glass-card p-8 neon-border">
         {/* Station Info */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 mb-4">
-            <Radio className="w-4 h-4 text-primary" />
-            <span className="text-sm font-mono text-primary">{station.genre}</span>
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30">
+              <Radio className="w-4 h-4 text-primary" />
+              <span className="text-sm font-mono text-primary">{station.genre}</span>
+            </div>
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent/10 border border-accent/30">
+              <Wifi className="w-3 h-3 text-accent" />
+              <span className="text-xs font-mono text-accent">{station.frequency}</span>
+            </div>
           </div>
           <h2 className="text-3xl font-bold gradient-text mb-2">{station.name}</h2>
           <div className="font-mono text-muted-foreground text-sm">
             <span className="text-primary">$</span> tocando_agora
+            <span className="ml-2 text-xs text-accent">[{station.key.toUpperCase()}]</span>
           </div>
         </div>
 
@@ -124,13 +137,30 @@ const RadioPlayer = () => {
             {isMuted ? 0 : volume[0]}%
           </span>
         </div>
+
+        {/* Toggle Stats Button */}
+        <div className="text-center mt-6">
+          <button
+            onClick={() => setShowStats(!showStats)}
+            className="px-4 py-2 rounded-lg bg-muted/30 hover:bg-muted/50 border border-muted/50 text-sm font-mono text-muted-foreground hover:text-foreground transition-all"
+          >
+            {showStats ? "< ocultar_estatisticas" : "> ver_estatisticas"}
+          </button>
+        </div>
       </div>
+
+      {/* Stats Section */}
+      {showStats && (
+        <div className="mt-8">
+          <StatsCard stations={stations} lastUpdate={lastUpdate} />
+        </div>
+      )}
 
       <div className="grid md:grid-cols-2 gap-6 mt-8">
         {/* Station List */}
         <div className="glass-card p-6">
           <h3 className="font-mono text-sm text-muted-foreground mb-4">
-            <span className="text-primary">{">"}</span> estações_disponiveis
+            <span className="text-primary">{">"}</span> estacoes_monitoradas
           </h3>
           <div className="space-y-2">
             {stations.map((s, i) => (
@@ -145,10 +175,16 @@ const RadioPlayer = () => {
               >
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className={`font-semibold ${i === currentStationIndex ? "text-primary" : "text-foreground"}`}>
-                      {s.name}
-                    </h4>
+                    <div className="flex items-center gap-2">
+                      <h4 className={`font-semibold ${i === currentStationIndex ? "text-primary" : "text-foreground"}`}>
+                        {s.name}
+                      </h4>
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-muted/50 text-muted-foreground">
+                        {s.key.toUpperCase()}
+                      </span>
+                    </div>
                     <p className="text-sm text-muted-foreground font-mono">{s.genre}</p>
+                    <p className="text-xs text-accent/70 font-mono">{s.frequency}</p>
                   </div>
                   {i === currentStationIndex && isPlaying && (
                     <div className="flex items-end gap-0.5 h-4">
@@ -175,7 +211,7 @@ const RadioPlayer = () => {
           <div className="space-y-3">
             {station.recentTracks.slice(0, 5).map((track, i) => (
               <div
-                key={i}
+                key={`${track.dna}-${i}`}
                 className="flex items-center gap-4 p-3 rounded-lg bg-muted/20 hover:bg-muted/30 transition-colors"
               >
                 <div className="w-10 h-10 rounded-lg bg-secondary/20 flex items-center justify-center">
@@ -191,6 +227,26 @@ const RadioPlayer = () => {
               </div>
             ))}
           </div>
+
+          {/* Histórico Completo */}
+          {station.historico.length > 0 && (
+            <div className="mt-6 pt-4 border-t border-muted/20">
+              <h4 className="font-mono text-xs text-muted-foreground mb-3">
+                <span className="text-accent">$</span> historico_completo ({station.historico.length})
+              </h4>
+              <div className="space-y-2 max-h-32 overflow-y-auto">
+                {station.historico.slice(0, 10).map((track, i) => (
+                  <div
+                    key={`hist-${track.dna}-${i}`}
+                    className="flex items-center justify-between p-2 rounded bg-muted/10 text-xs"
+                  >
+                    <span className="text-foreground truncate flex-1">{track.artist} - {track.title}</span>
+                    <span className="text-muted-foreground ml-2">{track.timeAgo}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
