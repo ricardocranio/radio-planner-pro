@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { FileText, Download, Clock, AlertTriangle, CheckCircle, Radio } from "lucide-react";
+import { useState } from "react";
+import { FileText, Download, Clock, AlertTriangle, CheckCircle, Music } from "lucide-react";
 import type { Station } from "@/types/radio";
 import {
   generateGrade,
@@ -7,6 +7,8 @@ import {
   formatFaltandoTxt,
   type GradeCompleta,
 } from "@/utils/gradeGenerator";
+import DeezerSearch from "./DeezerSearch";
+import type { DeezerTrack } from "@/utils/deezerApi";
 
 interface GradeGeneratorProps {
   stations: Station[];
@@ -16,10 +18,24 @@ const GradeGenerator = ({ stations }: GradeGeneratorProps) => {
   const [horaInicio, setHoraInicio] = useState(5);
   const [horaFim, setHoraFim] = useState(24);
   const [gradeGerada, setGradeGerada] = useState<GradeCompleta | null>(null);
+  const [showDeezerSearch, setShowDeezerSearch] = useState(false);
+  const [selectedTracks, setSelectedTracks] = useState<DeezerTrack[]>([]);
 
   const handleGenerate = () => {
     const grade = generateGrade(stations, horaInicio, horaFim);
     setGradeGerada(grade);
+    // Mostra busca Deezer se houver faltantes
+    if (grade.estatisticas.faltantes.length > 0) {
+      setShowDeezerSearch(true);
+    }
+  };
+
+  const handleSelectDeezerTrack = (track: DeezerTrack) => {
+    setSelectedTracks((prev) => {
+      // Evita duplicatas
+      if (prev.some((t) => t.id === track.id)) return prev;
+      return [...prev, track];
+    });
   };
 
   const handleDownloadGrade = () => {
@@ -153,11 +169,20 @@ const GradeGenerator = ({ stations }: GradeGeneratorProps) => {
           {/* Faltantes */}
           {gradeGerada.estatisticas.faltantes.length > 0 && (
             <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-              <div className="flex items-center gap-2 mb-3">
-                <AlertTriangle className="w-4 h-4 text-red-400" />
-                <span className="text-sm font-mono text-red-400">
-                  {gradeGerada.estatisticas.faltantes.length} músicas faltantes
-                </span>
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-red-400" />
+                  <span className="text-sm font-mono text-red-400">
+                    {gradeGerada.estatisticas.faltantes.length} músicas faltantes
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowDeezerSearch(!showDeezerSearch)}
+                  className="flex items-center gap-1 px-2 py-1 rounded-lg bg-primary/20 text-primary text-xs font-mono hover:bg-primary/30"
+                >
+                  <Music className="w-3 h-3" />
+                  {showDeezerSearch ? "Ocultar Deezer" : "Buscar no Deezer"}
+                </button>
               </div>
               <div className="max-h-32 overflow-y-auto space-y-1">
                 {gradeGerada.estatisticas.faltantes.slice(0, 10).map((f, i) => (
@@ -170,6 +195,44 @@ const GradeGenerator = ({ stations }: GradeGeneratorProps) => {
                     ... e mais {gradeGerada.estatisticas.faltantes.length - 10}
                   </p>
                 )}
+              </div>
+            </div>
+          )}
+
+          {/* Deezer Search */}
+          {showDeezerSearch && (
+            <DeezerSearch
+              faltantes={gradeGerada.estatisticas.faltantes}
+              onSelectTrack={handleSelectDeezerTrack}
+            />
+          )}
+
+          {/* Músicas selecionadas do Deezer */}
+          {selectedTracks.length > 0 && (
+            <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
+              <div className="flex items-center gap-2 mb-3">
+                <Music className="w-4 h-4 text-green-400" />
+                <span className="text-sm font-mono text-green-400">
+                  {selectedTracks.length} músicas do Deezer selecionadas
+                </span>
+              </div>
+              <div className="space-y-1 max-h-32 overflow-y-auto">
+                {selectedTracks.map((track) => (
+                  <div
+                    key={track.id}
+                    className="flex items-center justify-between p-2 rounded-lg bg-muted/20 text-xs"
+                  >
+                    <span className="font-mono truncate">
+                      {track.artist.name} - {track.title}
+                    </span>
+                    <button
+                      onClick={() => setSelectedTracks((prev) => prev.filter((t) => t.id !== track.id))}
+                      className="text-red-400 hover:text-red-300 ml-2"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
           )}
