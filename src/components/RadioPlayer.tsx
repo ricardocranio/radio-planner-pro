@@ -1,12 +1,14 @@
 import { useState, useMemo } from "react";
 import RankingMonitor from "./RankingMonitor";
-import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Radio, Clock, Music, Wifi, FileText, BarChart3, Calendar, TrendingUp } from "lucide-react";
+import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Radio, Clock, Music, Wifi, FileText, BarChart3, Calendar, TrendingUp, Search } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import AudioVisualizer from "./AudioVisualizer";
 import StatsCard from "./StatsCard";
 import GradeView from "./GradeView";
 import RadioReport from "./RadioReport";
+import ArlConfig from "./ArlConfig";
+import DeezerSearch from "./DeezerSearch";
 import rawRadioData from "@/data/radioData.json";
 import { parseRadioData } from "@/utils/parseRadioData";
 import type { RawRadioData, Station } from "@/types/radio";
@@ -55,7 +57,7 @@ const RadioPlayer = () => {
     <div className="w-full max-w-6xl mx-auto space-y-6">
       {/* Navigation Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full grid grid-cols-5 bg-muted/30 border border-muted/50 p-1">
+        <TabsList className="w-full grid grid-cols-6 bg-muted/30 border border-muted/50 p-1">
           <TabsTrigger 
             value="monitor" 
             className="font-mono text-xs data-[state=active]:bg-primary/20 data-[state=active]:text-primary"
@@ -69,6 +71,13 @@ const RadioPlayer = () => {
           >
             <TrendingUp className="w-4 h-4 mr-2" />
             Ranking
+          </TabsTrigger>
+          <TabsTrigger 
+            value="deezer" 
+            className="font-mono text-xs data-[state=active]:bg-pink-400/20 data-[state=active]:text-pink-400"
+          >
+            <Search className="w-4 h-4 mr-2" />
+            Deezer
           </TabsTrigger>
           <TabsTrigger 
             value="relatorio" 
@@ -290,6 +299,18 @@ const RadioPlayer = () => {
         {/* Ranking Tab */}
         <TabsContent value="ranking" className="mt-6">
           <RankingMonitor stations={stations} />
+        </TabsContent>
+
+        {/* Deezer Tab */}
+        <TabsContent value="deezer" className="mt-6">
+          <div className="grid gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-1">
+              <ArlConfig />
+            </div>
+            <div className="lg:col-span-2">
+              <DeezerSearch />
+            </div>
+          </div>
         </TabsContent>
 
         {/* Relatório Tab */}
