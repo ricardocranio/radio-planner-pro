@@ -334,7 +334,9 @@ const RadioPlayer = () => {
 
         {/* Grade Tab */}
         <TabsContent value="grade" className="mt-6">
-          <ProgrammingGrid stations={stations} />
+          <div className="space-y-6">
+            <GradeView stations={stations} />
+          </div>
         </TabsContent>
 
         {/* DNA Tab */}
