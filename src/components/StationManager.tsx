@@ -9,8 +9,9 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
-import { Plus, Edit2, Trash2, Radio, Settings2, MapPin } from "lucide-react";
+import { Plus, Edit2, Trash2, Radio, Settings2, MapPin, Folder } from "lucide-react";
 import StationForm, { type StationFormData } from "./StationForm";
+import { FolderConfig } from "./FolderConfig";
 import type { Station } from "@/types/radio";
 
 interface StationManagerProps {
@@ -141,8 +142,21 @@ const StationManager = ({ stations, onStationsChange }: StationManagerProps) => 
   };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
+    <div className="space-y-8">
+      {/* Configuração de Pastas */}
+      <Card className="bg-card/50 border-muted">
+        <CardHeader className="pb-4">
+          <CardTitle className="flex items-center gap-2 text-lg">
+            <Folder className="w-5 h-5 text-primary" />
+            Configurações do Sistema
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <FolderConfig />
+        </CardContent>
+      </Card>
+
+      {/* Header Emissoras */}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold flex items-center gap-2">
