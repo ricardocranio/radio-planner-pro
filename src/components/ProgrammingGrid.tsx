@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Clock, Calendar, Music, Radio, Zap, ChevronLeft, ChevronRight, Play, Pause, AlertCircle } from "lucide-react";
 import type { Station, Track } from "@/types/radio";
 import { getTopTracks, buildDNAData } from "@/utils/parseRadioData";
+import { getFileName } from "@/utils/dnaUtils";
 
 interface ProgrammingGridProps {
   stations: Station[];
@@ -81,7 +82,7 @@ const ProgrammingGrid = ({ stations }: ProgrammingGridProps) => {
           top10.forEach((item, idx) => {
             if (idx > 0) entries.push({ file: "vht", source: "VHT" });
             entries.push({
-              file: `${item.track.artist} - ${item.track.title}.mp3`,
+              file: getFileName(item.track.artist, item.track.title),
               source: "TOP30",
               dna: item.track.dna,
             });
@@ -110,7 +111,7 @@ const ProgrammingGrid = ({ stations }: ProgrammingGridProps) => {
               const source = isFromMonitoring ? radio.toUpperCase() : `CURADORIA_${radio.toUpperCase()}`;
 
               entries.push({
-                file: `${track.artist} - ${track.title}.mp3`,
+                file: getFileName(track.artist, track.title),
                 source,
                 dna: track.dna,
               });
