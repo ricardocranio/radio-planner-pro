@@ -187,7 +187,7 @@ const GradeGenerator = ({ stations }: GradeGeneratorProps) => {
               <div className="max-h-32 overflow-y-auto space-y-1">
                 {gradeGerada.estatisticas.faltantes.slice(0, 10).map((f, i) => (
                   <p key={i} className="text-xs font-mono text-muted-foreground truncate">
-                    {f}
+                    [{f.radio}] {f.artista} - {f.musica}
                   </p>
                 ))}
                 {gradeGerada.estatisticas.faltantes.length > 10 && (
@@ -202,7 +202,7 @@ const GradeGenerator = ({ stations }: GradeGeneratorProps) => {
           {/* Deezer Search */}
           {showDeezerSearch && (
             <DeezerSearch
-              faltantes={gradeGerada.estatisticas.faltantes}
+              faltantes={gradeGerada.estatisticas.faltantes.map(f => `[${f.horario}] ${f.artista} - ${f.musica}`)}
               onSelectTrack={handleSelectDeezerTrack}
             />
           )}
