@@ -5,6 +5,7 @@ import FloatingOrbs from "@/components/FloatingOrbs";
 import ProgrammingDashboard from "@/components/ProgrammingDashboard";
 import { FolderConfig } from "@/components/FolderConfig";
 import ArlConfig from "@/components/ArlConfig";
+import { InstallPWA } from "@/components/InstallPWA";
 import { parseRadioData } from "@/utils/parseRadioData";
 import rawRadioData from "@/data/radioData.json";
 import type { RawRadioData } from "@/types/radio";
@@ -101,7 +102,8 @@ const Index = () => {
             </Tabs>
 
             {/* Footer */}
-            <footer className="mt-16 text-center">
+            <footer className="mt-16 text-center space-y-4">
+              <InstallPWA />
               <p className="font-mono text-sm text-muted-foreground">
                 <span className="text-primary">console</span>
                 <span className="text-secondary">.log</span>
