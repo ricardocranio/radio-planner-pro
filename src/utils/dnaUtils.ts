@@ -132,3 +132,21 @@ export function formatTimeAgo(timestamp: string): string {
     return timestamp;
   }
 }
+
+/**
+ * Gera o nome do arquivo MP3 no formato: artista-musica.mp3
+ * Remove acentos, espaços e caracteres especiais
+ */
+export function getFileName(artist: string, title: string): string {
+  const normalizedArtist = removeAccents(artist)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_|_$/g, "");
+  
+  const normalizedTitle = removeAccents(title)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_|_$/g, "");
+  
+  return `${normalizedArtist}-${normalizedTitle}.mp3`;
+}
