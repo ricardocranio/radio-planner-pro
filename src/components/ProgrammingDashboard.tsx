@@ -27,7 +27,11 @@ const ProgrammingDashboard = ({ stations }: ProgrammingDashboardProps) => {
 
   const handleGradeGenerated = (grade: GradeCompleta) => {
     setGradeGerada(grade);
-    setFaltantes(grade.estatisticas.faltantes);
+    // Converte MissingEntry[] para string[] para compatibilidade com FaltandoManager
+    const faltantesStrings = grade.estatisticas.faltantes.map(
+      f => `[${f.horario}] ${f.artista} - ${f.musica}`
+    );
+    setFaltantes(faltantesStrings);
     // Auto-switch para aba faltando se houver faltantes
     if (grade.estatisticas.faltantes.length > 0) {
       setCurrentTab("faltando");

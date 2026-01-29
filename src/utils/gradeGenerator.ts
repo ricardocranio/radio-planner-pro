@@ -35,6 +35,8 @@ const PROGRAMAS_HORARIO: Record<string, string> = {
 
 export interface GradeEntry {
   musica: string;
+  musicaDNA: string;
+  artistaDNA: string;
   fonte: string; // BH, BAND, CLUBE, GLOBO, VHT, CORINGA, CONTEUDO
   tipo: "musica" | "vht" | "coringa" | "conteudo";
 }
@@ -43,7 +45,15 @@ export interface BlocoGrade {
   horario: string;
   programa: string;
   entries: GradeEntry[];
-  missing: string[];
+  missing: MissingEntry[];
+}
+
+export interface MissingEntry {
+  horario: string;
+  musica: string;
+  artista: string;
+  radio: string;
+  dna: string;
 }
 
 export interface GradeCompleta {
@@ -54,7 +64,7 @@ export interface GradeCompleta {
     totalMusicas: number;
     porRadio: Record<string, number>;
     coringas: number;
-    faltantes: string[];
+    faltantes: MissingEntry[];
   };
 }
 
@@ -103,6 +113,16 @@ function getPositionRadio(
 }
 
 /**
+ * Extrai artista do nome do arquivo
+ */
+function getArtistFromFilename(filename: string): string {
+  if (filename.includes(" - ")) {
+    return filename.split(" - ")[0].trim();
+  }
+  return "";
+}
+
+/**
  * Monta um bloco de programação (30 minutos)
  */
 function buildBlock(
@@ -114,7 +134,7 @@ function buildBlock(
   distribuicao: DistribuicaoConfig = DEFAULT_DISTRIBUICAO
 ): BlocoGrade {
   const entries: GradeEntry[] = [];
-  const missing: string[] = [];
+  const missing: MissingEntry[] = [];
   const programa = getPrograma(hour);
 
   // Calcula total de posições
@@ -148,6 +168,8 @@ function buildBlock(
         if (entries.length > 0 && entries[entries.length - 1].tipo !== "conteudo") {
           entries.push({
             musica: "vht",
+            musicaDNA: "",
+            artistaDNA: "",
             fonte: "VHT",
             tipo: "vht",
           });
@@ -156,6 +178,8 @@ function buildBlock(
         // Adiciona música
         entries.push({
           musica: `${track.artist} - ${track.title}`,
+          musicaDNA: track.dna,
+          artistaDNA: artistDNA,
           fonte: targetRadio.toUpperCase(),
           tipo: "musica",
         });
@@ -170,7 +194,13 @@ function buildBlock(
         // Registra como faltante
         const nowPlaying = station.nowPlaying;
         if (nowPlaying && !usedDNAs.has(nowPlaying.dna)) {
-          missing.push(`[${timeStr}] ${nowPlaying.artist} - ${nowPlaying.title}`);
+          missing.push({
+            horario: timeStr,
+            musica: nowPlaying.title,
+            artista: nowPlaying.artist,
+            radio: targetRadio.toUpperCase(),
+            dna: nowPlaying.dna,
+          });
         }
       }
     }
@@ -180,12 +210,16 @@ function buildBlock(
       if (entries.length > 0 && entries[entries.length - 1].tipo !== "conteudo") {
         entries.push({
           musica: "vht",
+          musicaDNA: "",
+          artistaDNA: "",
           fonte: "VHT",
           tipo: "vht",
         });
       }
       entries.push({
         musica: "mus",
+        musicaDNA: "",
+        artistaDNA: "",
         fonte: "CORINGA",
         tipo: "coringa",
       });
@@ -212,7 +246,7 @@ export function generateGrade(
   const blocos: BlocoGrade[] = [];
   const usedDNAs = new Set<string>();
   const usedArtists = new Set<string>();
-  const allMissing: string[] = [];
+  const allMissing: MissingEntry[] = [];
   const porRadio: Record<string, number> = {};
   let coringas = 0;
   let totalMusicas = 0;
@@ -312,7 +346,7 @@ export function formatGradeToTxt(grade: GradeCompleta): string {
     lines.push("MÚSICAS FALTANTES");
     lines.push("=".repeat(60));
     for (const faltante of grade.estatisticas.faltantes) {
-      lines.push(faltante);
+      lines.push(`[${faltante.horario}] [${faltante.radio}] ${faltante.artista} - ${faltante.musica}`);
     }
   }
 
@@ -331,8 +365,46 @@ export function formatFaltandoTxt(grade: GradeCompleta): string {
   lines.push(`--- FALTANTES ${grade.data} ${new Date().toLocaleTimeString("pt-BR")} ---`);
 
   for (const faltante of grade.estatisticas.faltantes) {
-    lines.push(faltante);
+    lines.push(`[${faltante.radio}] ${faltante.artista} - ${faltante.musica}`);
   }
 
   return lines.join("\n");
+}
+
+/**
+ * Agrupa faltantes por rádio para exibição
+ */
+export function groupFaltantesByRadio(faltantes: MissingEntry[]): Record<string, MissingEntry[]> {
+  const grouped: Record<string, MissingEntry[]> = {};
+  
+  for (const faltante of faltantes) {
+    if (!grouped[faltante.radio]) {
+      grouped[faltante.radio] = [];
+    }
+    grouped[faltante.radio].push(faltante);
+  }
+  
+  return grouped;
+}
+
+/**
+ * Exporta configuração padrão de distribuição
+ */
+export function getDefaultDistribuicao(): DistribuicaoConfig {
+  return DEFAULT_DISTRIBUICAO;
+}
+
+/**
+ * Atualiza configuração de distribuição
+ */
+export function updateDistribuicao(
+  current: DistribuicaoConfig,
+  radio: string,
+  inicio: number,
+  fim: number
+): DistribuicaoConfig {
+  return {
+    ...current,
+    [radio]: { posicaoInicio: inicio, posicaoFim: fim },
+  };
 }

@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import RankingMonitor from "./RankingMonitor";
-import { Radio, Clock, Music, Wifi, FileText, BarChart3, Calendar, TrendingUp, Search, Dna, Activity, Settings2 } from "lucide-react";
+import { Radio, Clock, Music, Wifi, FileText, BarChart3, Calendar, TrendingUp, Search, Dna, Activity, Settings2, Terminal } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import StatsCard from "./StatsCard";
 import GradeView from "./GradeView";
@@ -10,6 +10,7 @@ import DeezerSearch from "./DeezerSearch";
 import SystemDashboard from "./SystemDashboard";
 import DNAViewer from "./DNAViewer";
 import StationManager from "./StationManager";
+import PythonScripts from "./PythonScripts";
 import rawRadioData from "@/data/radioData.json";
 import { parseRadioData } from "@/utils/parseRadioData";
 import type { RawRadioData, Station } from "@/types/radio";
@@ -48,7 +49,7 @@ const RadioPlayer = () => {
   return (
     <div className="w-full max-w-6xl mx-auto space-y-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="w-full grid grid-cols-5 md:grid-cols-9 bg-muted/30 border border-muted/50 p-1 h-auto">
+        <TabsList className="w-full grid grid-cols-5 md:grid-cols-10 bg-muted/30 border border-muted/50 p-1 h-auto">
           <TabsTrigger
             value="dashboard" 
             className="font-mono text-[10px] md:text-xs data-[state=active]:bg-primary/20 data-[state=active]:text-primary py-2"
@@ -111,6 +112,13 @@ const RadioPlayer = () => {
           >
             <Settings2 className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
             <span className="hidden md:inline">Config</span>
+          </TabsTrigger>
+          <TabsTrigger 
+            value="scripts" 
+            className="font-mono text-[10px] md:text-xs data-[state=active]:bg-secondary/20 data-[state=active]:text-secondary py-2"
+          >
+            <Terminal className="w-3 h-3 md:w-4 md:h-4 md:mr-2" />
+            <span className="hidden md:inline">Python</span>
           </TabsTrigger>
         </TabsList>
 
@@ -280,6 +288,11 @@ const RadioPlayer = () => {
         {/* Gerenciar Tab */}
         <TabsContent value="gerenciar" className="mt-6">
           <StationManager stations={stations} onStationsChange={setStations} />
+        </TabsContent>
+
+        {/* Scripts Python Tab */}
+        <TabsContent value="scripts" className="mt-6">
+          <PythonScripts />
         </TabsContent>
       </Tabs>
     </div>

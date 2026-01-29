@@ -533,7 +533,7 @@ const GradeView = ({ stations }: GradeViewProps) => {
           <div className="max-h-24 overflow-y-auto space-y-1">
             {grade.estatisticas.faltantes.slice(0, 5).map((f, i) => (
               <p key={i} className="text-xs font-mono text-muted-foreground truncate">
-                {f}
+                [{f.radio}] {f.artista} - {f.musica}
               </p>
             ))}
             {grade.estatisticas.faltantes.length > 5 && (
