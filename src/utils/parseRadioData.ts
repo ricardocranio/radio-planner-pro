@@ -14,32 +14,79 @@ import {
 } from "./dnaUtils";
 
 /**
- * Parseia uma string de música no formato:
+ * Parseia uma string de música nos formatos suportados:
+ * 
+ * Formato 1 (MyTuner com quebras de linha):
  * "Título da Música\n\nNome do Artista\nX min ago"
- * ou
+ * 
+ * Formato 2 (radio_monitor_supabase.py):
+ * "Artista - Música"
+ * 
+ * Formato 3:
  * "Título da Música\n\nNome do Artista\nLIVE"
  */
 function parseTrackString(raw: string, timestamp?: string): Track {
-  const parts = raw.split("\n").filter((p) => p.trim());
+  if (!raw || typeof raw !== 'string') {
+    return {
+      title: "Sem informação",
+      artist: "Desconhecido",
+      timeAgo: "agora",
+      dna: "",
+      timestamp,
+    };
+  }
 
   let title = "Música";
   let artist = "Artista";
   let timeAgo = "agora";
 
-  if (parts.length >= 1) {
-    title = parts[0].trim();
-  }
-
-  if (parts.length >= 2) {
-    artist = parts[1].trim();
-  }
-
-  if (parts.length >= 3) {
-    timeAgo = parts[2].trim();
-    // Normaliza "LIVE" para "AO VIVO"
+  // Remove indicadores de tempo no final (ex: "3 min ago", "LIVE")
+  const timeMatch = raw.match(/\s+(\d+\s*(min|sec|seg|hour|hora)s?\s*(ago|atrás)?|LIVE)\s*$/i);
+  if (timeMatch) {
+    timeAgo = timeMatch[1].trim();
     if (timeAgo.toUpperCase() === "LIVE") {
       timeAgo = "AO VIVO";
     }
+    raw = raw.replace(timeMatch[0], "").trim();
+  }
+
+  // Tenta detectar o formato
+  if (raw.includes(" - ")) {
+    // Formato: "Artista - Música" (radio_monitor_supabase.py)
+    const parts = raw.split(" - ");
+    if (parts.length >= 2) {
+      artist = parts[0].trim();
+      title = parts.slice(1).join(" - ").trim();
+    }
+  } else if (raw.includes(" – ")) {
+    // Formato com travessão
+    const parts = raw.split(" – ");
+    if (parts.length >= 2) {
+      artist = parts[0].trim();
+      title = parts.slice(1).join(" – ").trim();
+    }
+  } else if (raw.includes("\n")) {
+    // Formato com quebra de linha (MyTuner)
+    const parts = raw.split("\n").filter((p) => p.trim());
+    
+    if (parts.length >= 1) {
+      title = parts[0].trim();
+    }
+
+    if (parts.length >= 2) {
+      artist = parts[1].trim();
+    }
+
+    if (parts.length >= 3) {
+      const possibleTime = parts[2].trim();
+      if (/^\d+\s*(min|sec|seg|hour|hora)/i.test(possibleTime) || possibleTime.toUpperCase() === "LIVE") {
+        timeAgo = possibleTime.toUpperCase() === "LIVE" ? "AO VIVO" : possibleTime;
+      }
+    }
+  } else {
+    // Texto simples sem separador - assume que é o título
+    title = raw.trim();
+    artist = "Desconhecido";
   }
 
   const dna = getDNA(`${artist} - ${title}`);
@@ -55,7 +102,7 @@ function parseTrackString(raw: string, timestamp?: string): Track {
 
 /**
  * Processa os dados brutos do JSON e retorna estações formatadas
- * Espelha a lógica do RadioDataProvider._get_from_local_file()
+ * Suporta o formato do radio_monitor_supabase.py
  */
 export function parseRadioData(raw: RawRadioData): Station[] {
   const stations: Station[] = [];
@@ -65,7 +112,12 @@ export function parseRadioData(raw: RawRadioData): Station[] {
   const stationsByKey: Record<string, Station> = {};
 
   for (const [id, radioInfo] of Object.entries(radiosData)) {
-    const key = mapStationToKey(radioInfo.nome);
+    // A chave já pode ser bh, band, clube, globo direto do JSON
+    const key = id.toLowerCase() === "bh" || id.toLowerCase() === "band" || 
+                id.toLowerCase() === "clube" || id.toLowerCase() === "globo" 
+                ? id.toLowerCase() 
+                : mapStationToKey(radioInfo.nome || id);
+    
     const ultimoDado = radioInfo.ultimo_dado;
 
     if (!ultimoDado) continue;
@@ -81,18 +133,24 @@ export function parseRadioData(raw: RawRadioData): Station[] {
       parseTrackString(track, ultimoDado.timestamp)
     );
 
-    // Parseia histórico completo
-    const historico = (radioInfo.historico_completo || []).map((entry) =>
-      parseTrackString(entry.musica, entry.timestamp)
-    );
+    // Parseia histórico completo (suporta "historico" ou "historico_completo")
+    const historicoRaw = radioInfo.historico_completo || radioInfo.historico || [];
+    const historico = historicoRaw.map((entry) => {
+      // Suporta formato com "musica" ou "tocando_agora"
+      const songText = entry.musica || entry.tocando_agora || "";
+      return parseTrackString(songText, entry.timestamp);
+    }).filter(t => t.title && t.title !== "Sem informação");
+
+    // Usa frequencia do JSON ou extrai do nome
+    const frequency = radioInfo.frequencia || extractFrequency(radioInfo.nome || id);
 
     const station: Station = {
       id,
       key,
-      name: ultimoDado.nome || radioInfo.nome,
+      name: ultimoDado.nome || radioInfo.nome || id.toUpperCase(),
       genre: getGenreFromStation(key),
-      frequency: extractFrequency(radioInfo.nome),
-      url: ultimoDado.url || radioInfo.url,
+      frequency,
+      url: ultimoDado.url || radioInfo.url || "",
       nowPlaying,
       recentTracks,
       historico,
