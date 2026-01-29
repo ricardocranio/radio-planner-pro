@@ -1,41 +1,34 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, memo, useCallback } from "react";
 import { Activity, Database, Radio, Zap, Clock, AlertTriangle, CheckCircle, RefreshCw, Settings, Cpu, HardDrive, Wifi, TrendingUp } from "lucide-react";
 import type { Station } from "@/types/radio";
-import { getSystemStats, getTopTracks, buildDNAData } from "@/utils/parseRadioData";
+import { useSystemStats, useTopTracks, useRadioConfig } from "@/hooks/useRadioData";
 
 interface SystemDashboardProps {
   stations: Station[];
   lastUpdate: string;
 }
 
-const SystemDashboard = ({ stations, lastUpdate }: SystemDashboardProps) => {
+const SystemDashboard = memo(function SystemDashboard({ stations, lastUpdate }: SystemDashboardProps) {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const stats = useMemo(() => getSystemStats(stations, lastUpdate), [stations, lastUpdate]);
-  const dnaData = useMemo(() => buildDNAData(stations), [stations]);
-  const topTracks = useMemo(() => getTopTracks(stations, 5), [stations]);
+  const { stats, dnaData } = useSystemStats(stations, lastUpdate);
+  const topTracks = useTopTracks(stations, 5);
+  const radioConfig = useRadioConfig();
 
-  const radioConfig: Record<string, { name: string; color: string; statusColor: string }> = {
-    bh: { name: "BH FM", color: "text-cyan-400", statusColor: "bg-cyan-400" },
-    band: { name: "Band FM", color: "text-purple-400", statusColor: "bg-purple-400" },
-    clube: { name: "Clube FM", color: "text-green-400", statusColor: "bg-green-400" },
-    globo: { name: "Globo FM", color: "text-yellow-400", statusColor: "bg-yellow-400" },
-  };
-
-  const simulateRefresh = () => {
+  const simulateRefresh = useCallback(() => {
     setIsRefreshing(true);
     setTimeout(() => setIsRefreshing(false), 2000);
-  };
+  }, []);
 
   // Calcula métricas do sistema
   const systemMetrics = useMemo(() => {
     const totalExecucoes = Object.values(stats.porRadio).reduce((a, b) => a + b, 0);
     const avgPerRadio = totalExecucoes / Object.keys(stats.porRadio).length || 0;
     
-    // Simula métricas de sistema
+    // Valores estáticos para evitar re-renders
     const uptime = 99.7;
-    const memoryUsage = Math.random() * 30 + 40;
-    const cpuUsage = Math.random() * 20 + 10;
+    const memoryUsage = 52.3;
+    const cpuUsage = 18.5;
     const dnaAccuracy = 98.5;
 
     return { totalExecucoes, avgPerRadio, uptime, memoryUsage, cpuUsage, dnaAccuracy };
@@ -156,9 +149,9 @@ const SystemDashboard = ({ stations, lastUpdate }: SystemDashboardProps) => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {stations.map((station) => {
-            const config = radioConfig[station.key];
+            const config = radioConfig[station.key as keyof typeof radioConfig];
             const execucoes = stats.porRadio[station.key] || 0;
-            const isOnline = true; // Simulated
+            const isOnline = true;
 
             return (
               <div
@@ -303,6 +296,6 @@ const SystemDashboard = ({ stations, lastUpdate }: SystemDashboardProps) => {
       </div>
     </div>
   );
-};
+});
 
 export default SystemDashboard;
