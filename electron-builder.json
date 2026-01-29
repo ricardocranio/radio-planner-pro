@@ -1,0 +1,39 @@
+{
+  "appId": "com.pgmfm.radiomonitor",
+  "productName": "PGM-FM Radio Monitor",
+  "copyright": "Copyright © 2024 PGM-FM",
+  "directories": {
+    "output": "release",
+    "buildResources": "public"
+  },
+  "files": [
+    "dist/**/*",
+    "electron/**/*",
+    "public/icon-*.png"
+  ],
+  "extraMetadata": {
+    "main": "electron/main.js"
+  },
+  "win": {
+    "target": [
+      {
+        "target": "nsis",
+        "arch": ["x64"]
+      }
+    ],
+    "icon": "public/icon-512.png",
+    "artifactName": "${productName}-Setup-${version}.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "perMachine": true,
+    "allowToChangeInstallationDirectory": true,
+    "deleteAppDataOnUninstall": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true,
+    "shortcutName": "PGM-FM Radio Monitor"
+  },
+  "portable": {
+    "artifactName": "${productName}-Portable-${version}.${ext}"
+  }
+}
