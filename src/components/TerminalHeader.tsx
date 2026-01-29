@@ -13,11 +13,10 @@ const TerminalHeader = () => {
             <div>
               <h1 className="font-bold text-xl">
                 <span className="text-primary">{"<"}</span>
-                <span className="text-foreground">Rádio</span>
-                <span className="text-secondary">Coder</span>
+                <span className="text-foreground">Programador</span>
                 <span className="text-primary">{"/>"}</span>
               </h1>
-              <p className="text-xs font-mono text-muted-foreground">v1.0.0 | streaming...</p>
+              <p className="text-xs font-mono text-muted-foreground">System v2.0 - Auto Download Mode</p>
             </div>
           </div>
 
