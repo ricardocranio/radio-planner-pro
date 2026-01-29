@@ -11,7 +11,7 @@ echo.
 
 :: Verificar Node.js
 echo [1/6] Verificando Node.js...
-node -v >nul 2>&1
+where node >nul 2>&1
 if %errorlevel% neq 0 (
     echo [ERRO] Node.js nao encontrado! Instale em: https://nodejs.org
     pause
@@ -22,13 +22,13 @@ echo.
 
 :: Verificar npm
 echo [2/6] Verificando npm...
-npm -v >nul 2>&1
+where npm >nul 2>&1
 if %errorlevel% neq 0 (
     echo [ERRO] npm nao encontrado!
     pause
     exit /b 1
 )
-for /f "tokens=*" %%i in ('npm -v') do echo       Versao: %%i
+for /f "tokens=*" %%i in ('npm -v') do echo       Versao npm: %%i
 echo.
 
 :: Limpar cache e node_modules antigos
@@ -41,30 +41,38 @@ if exist "dist" (
     echo       Removendo dist antigo...
     rmdir /s /q dist 2>nul
 )
-npm cache clean --force >nul 2>&1
+call npm cache clean --force >nul 2>&1
 echo       Cache limpo!
 echo.
 
 :: Instalar dependências
 echo [4/6] Instalando dependencias...
 echo       Isso pode levar alguns minutos...
-npm install
+echo.
+call npm install
 if %errorlevel% neq 0 (
+    echo.
     echo [ERRO] Falha ao instalar dependencias!
+    echo       Tente executar manualmente: npm install
     pause
     exit /b 1
 )
+echo.
 echo       Dependencias instaladas!
 echo.
 
 :: Build do projeto
 echo [5/6] Compilando projeto...
-npm run build
+echo.
+call npm run build
 if %errorlevel% neq 0 (
+    echo.
     echo [ERRO] Falha na compilacao!
+    echo       Tente executar manualmente: npm run build
     pause
     exit /b 1
 )
+echo.
 echo       Projeto compilado!
 echo.
 
@@ -83,7 +91,6 @@ if exist "dist\index.html" (
     echo.
     echo   Para deploy:
     echo     - Publique a pasta 'dist' em qualquer servidor web
-    echo     - Ou use: npx surge dist
     echo.
 ) else (
     echo [ERRO] Arquivo index.html nao encontrado na pasta dist!
@@ -91,5 +98,6 @@ if exist "dist\index.html" (
     exit /b 1
 )
 
+echo.
 echo Pressione qualquer tecla para sair...
 pause >nul

@@ -13,7 +13,7 @@ if not exist "node_modules" (
     echo [AVISO] Pasta node_modules nao encontrada!
     echo         Executando npm install...
     echo.
-    npm install
+    call npm install
     if %errorlevel% neq 0 (
         echo [ERRO] Falha ao instalar dependencias!
         pause
@@ -33,7 +33,7 @@ echo ─────────────────────────
 echo.
 
 :: Iniciar servidor Vite
-npm run dev
+call npm run dev
 
 echo.
 echo ──────────────────────────────────────────────────────────────
