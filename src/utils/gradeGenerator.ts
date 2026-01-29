@@ -260,7 +260,17 @@ export function generateGrade(
 }
 
 /**
+ * Formata o nome do arquivo MP3 no estilo Python: "Artista - Titulo.mp3"
+ */
+function formatMp3Name(musica: string): string {
+  // musica já vem como "Artista - Titulo"
+  // Adiciona .mp3 ao final
+  return `"${musica}.mp3"`;
+}
+
+/**
  * Formata a grade para TXT (igual ao Python)
+ * Formato: 19:00 (ID=TOP50) "Artista - Titulo.mp3",vht,"Artista - Titulo.mp3",...
  */
 export function formatGradeToTxt(grade: GradeCompleta): string {
   const lines: string[] = [];
@@ -277,7 +287,7 @@ export function formatGradeToTxt(grade: GradeCompleta): string {
       } else if (entry.tipo === "coringa") {
         return "mus";
       } else {
-        return `"${entry.musica}"`;
+        return formatMp3Name(entry.musica);
       }
     });
 
