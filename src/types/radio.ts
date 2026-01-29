@@ -1,24 +1,31 @@
 // Tipos que espelham a estrutura do sistema PGM-FM Python
+// Suporta formato do radio_monitor_supabase.py
 
 // Dados brutos vindos do radio_historico.json
 export interface RawHistoricoEntry {
-  musica: string;
+  musica?: string;
+  tocando_agora?: string;
+  ultimas_tocadas?: string[];
   timestamp: string;
 }
 
+// Formato do ultimo_dado (pode ter url e nome ou não, dependendo da versão)
 export interface RawUltimoDado {
-  url: string;
-  nome: string;
+  url?: string;
+  nome?: string;
   tocando_agora: string;
   ultimas_tocadas: string[];
   timestamp: string;
-  erro: string | null;
+  erro?: string | null;
 }
 
+// Formato de cada rádio no JSON
 export interface RawRadioInfo {
   nome: string;
-  url: string;
-  historico_completo: RawHistoricoEntry[];
+  frequencia?: string; // Novo campo do radio_monitor_supabase.py
+  url?: string;
+  historico?: RawHistoricoEntry[]; // Pode ser "historico" ou "historico_completo"
+  historico_completo?: RawHistoricoEntry[];
   ultimo_dado: RawUltimoDado;
 }
 
