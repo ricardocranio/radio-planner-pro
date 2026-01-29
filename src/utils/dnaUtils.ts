@@ -150,3 +150,24 @@ export function getFileName(artist: string, title: string): string {
   
   return `${normalizedArtist}-${normalizedTitle}.mp3`;
 }
+
+/**
+ * Compara duas músicas usando DNA para verificar se são a mesma
+ */
+export function isSameTrack(track1: string, track2: string): boolean {
+  return getDNA(track1) === getDNA(track2);
+}
+
+/**
+ * Extrai artista e título de uma string "Artista - Título"
+ */
+export function parseTrackString(trackString: string): { artist: string; title: string } {
+  const parts = trackString.split(" - ");
+  if (parts.length >= 2) {
+    return {
+      artist: parts[0].trim(),
+      title: parts.slice(1).join(" - ").trim()
+    };
+  }
+  return { artist: "", title: trackString.trim() };
+}
