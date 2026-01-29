@@ -5,11 +5,12 @@ import { getSystemStats, getTopTracks, buildDNAData } from "@/utils/parseRadioDa
 
 interface StatsCardProps {
   stations: Station[];
-  lastUpdate: string;
+  lastUpdate?: string;
 }
 
 const StatsCard = ({ stations, lastUpdate }: StatsCardProps) => {
-  const stats = useMemo(() => getSystemStats(stations, lastUpdate), [stations, lastUpdate]);
+  const updateStr = lastUpdate || stations[0]?.lastUpdate || new Date().toISOString();
+  const stats = useMemo(() => getSystemStats(stations, updateStr), [stations, updateStr]);
   const dnaData = useMemo(() => buildDNAData(stations), [stations]);
   const topTracks = useMemo(() => getTopTracks(stations, 10), [stations]);
 
